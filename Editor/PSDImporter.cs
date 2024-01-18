@@ -1126,11 +1126,13 @@ namespace UnityEditor.U2D.PSD
                 for (var i = 0; i < psdLayers.Count; ++i)
                 {
                     var l = psdLayers[i];
-                    if (l.gameObject == null || l.gameObject.GetComponent<SpriteRenderer>() == null)
+                    if (l.gameObject == null || !l.gameObject.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
                         continue;
                     var p = l.gameObject.transform.localPosition;
                     p -= documentPivot;
                     l.gameObject.transform.localPosition = p;
+
+                    sr.color = new Color(1, 1, 1, l.opacity);
                 }
                 for (int i = 0; i < boneGOs.Length; ++i)
                 {

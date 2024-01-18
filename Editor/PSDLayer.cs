@@ -27,13 +27,13 @@ namespace UnityEditor.U2D.PSD
         bool m_IsImported;
         [SerializeField]
         bool m_IsVisible;
-
+        
         [NonSerialized] 
         Vector2 m_LayerPosition;
         [NonSerialized]
         GameObject m_GameObject;
 
-        public PSDLayer(NativeArray<Color32> tex, int parent, bool group, string layerName, int width, int height, int id, bool hidden)
+        public PSDLayer(NativeArray<Color32> tex, int parent, bool group, string layerName, int width, int height, float _opacity, int id, bool hidden)
         {
             isGroup = group;
             parentIndex = parent;
@@ -41,6 +41,7 @@ namespace UnityEditor.U2D.PSD
             name = layerName;
             this.width = width;
             this.height = height;
+            opacity = _opacity;
             layerID = id;
             m_Flatten = false;
             m_IsImported = false;
@@ -64,6 +65,7 @@ namespace UnityEditor.U2D.PSD
             m_GameObject = layer.m_GameObject;
             width = layer.width;
             height = layer.height;
+            opacity = layer.opacity;
             texture = layer.texture;
         }
 
@@ -94,7 +96,8 @@ namespace UnityEditor.U2D.PSD
         public NativeArray<Color32> texture { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-
+        public float opacity { get; set; }
+        
         public void Dispose()
         {
             if (texture.IsCreated)
