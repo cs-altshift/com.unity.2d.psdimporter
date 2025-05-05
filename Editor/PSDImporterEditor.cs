@@ -69,6 +69,7 @@ namespace UnityEditor.U2D.PSD
         SerializedProperty m_ConvertToNormalMap;
         SerializedProperty m_MosaicLayers;
         SerializedProperty m_ImportHiddenLayers;
+        SerializedProperty m_ImportOpacity;
         SerializedProperty m_ResliceFromLayer;
         SerializedProperty m_CharacterMode;
         SerializedProperty m_DocumentPivot;
@@ -128,6 +129,7 @@ namespace UnityEditor.U2D.PSD
             base.OnEnable();
             m_MosaicLayers = serializedObject.FindProperty("m_MosaicLayers");
             m_ImportHiddenLayers = serializedObject.FindProperty("m_ImportHiddenLayers");
+            m_ImportOpacity = serializedObject.FindProperty("m_ImportOpacity");
             m_ResliceFromLayer = serializedObject.FindProperty("m_ResliceFromLayer");
             m_CharacterMode = serializedObject.FindProperty("m_CharacterMode");
             m_DocumentPivot = serializedObject.FindProperty("m_DocumentPivot");
@@ -940,6 +942,7 @@ namespace UnityEditor.U2D.PSD
         {
             if (m_EditorFoldOutState.DoLayerImportUI(styles.layerImportHeaderText))
             {
+                EditorGUILayout.PropertyField(m_ImportOpacity, styles.importOpacity);
                 EditorGUILayout.PropertyField(m_ImportHiddenLayers, styles.importHiddenLayer);
 
                 using (new EditorGUI.DisabledScope(m_SpriteMode.intValue != (int)SpriteImportMode.Multiple || m_SpriteMode.hasMultipleDifferentValues))
@@ -1690,6 +1693,7 @@ namespace UnityEditor.U2D.PSD
             public readonly GUIContent layerMapping  = EditorGUIUtility.TrTextContent("Layer Mapping", "Options for indicating how layer to Sprite mapping.");
             public readonly GUIContent generatePhysicsShape = EditorGUIUtility.TrTextContent("Generate Physics Shape", "Generates a default physics shape from the outline of the Sprite/s when a physics shape has not been set in the Sprite Editor.");
             public readonly GUIContent importHiddenLayer = EditorGUIUtility.TrTextContent("Include Hidden Layers", "Settings to determine when hidden layers should be imported.");
+            public readonly GUIContent importOpacity = EditorGUIUtility.TrTextContent("Include Opacity", "If set, opacity will be applied to Sprite Renderers.");
             public readonly GUIContent mosaicLayers = EditorGUIUtility.TrTextContent("Import Mode", "Layers will be imported as individual Sprites.");
             public readonly GUIContent characterMode = EditorGUIUtility.TrTextContent("Use as Rig","Enable to support 2D Animation character rigging.");
             public readonly GUIContent layerGroupLabel = EditorGUIUtility.TrTextContent("Use Layer Group", "GameObjects are grouped according to source file layer grouping.");

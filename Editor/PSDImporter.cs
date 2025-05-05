@@ -139,6 +139,8 @@ namespace UnityEditor.U2D.PSD
         [SerializeField]
         bool m_ImportHiddenLayers = false;
         [SerializeField]
+        bool m_ImportOpacity = false;
+        [SerializeField]
         ELayerMappingOption m_LayerMappingOption = ELayerMappingOption.UseLayerId;
         [SerializeField]
         bool  m_GeneratePhysicsShape = false;
@@ -1221,11 +1223,18 @@ namespace UnityEditor.U2D.PSD
                 for (var i = 0; i < psdLayers.Count; ++i)
                 {
                     var l = psdLayers[i];
-                    if (l.gameObject == null || l.gameObject.GetComponent<SpriteRenderer>() == null)
+                    if (l.gameObject == null || !l.gameObject.TryGetComponent(out SpriteRenderer sr))
                         continue;
                     var p = l.gameObject.transform.localPosition;
                     p -= documentPivot;
                     l.gameObject.transform.localPosition = p;
+
+                    if (m_ImportOpacity) {
+                        sr.color = new Color(1, 1, 1, l.opacity);
+                    }
+                    else {
+                        sr.color = Color.white;
+                    }
                 }
                 for (int i = 0; i < boneGOs.Length; ++i)
                 {
